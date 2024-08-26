@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graduation Countdown</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            background-image: url('rotation5.jpg'); /* Main image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 4.5em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .countdown {
+            font-size: 6em;
+            font-weight: bold;
+            padding: 15px 20px;
+        }
+
+        .joke {
+            font-size: 2.5em;
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        .hashtags {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .small-image-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 250px; /* Increased size */
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .small-image-left {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 250px; /* Increased size */
+            height: auto;
+            border-radius: 10px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            .title {
+                font-size: 3.5em;
+            }
+            .countdown {
+                font-size: 4.5em;
+            }
+            .joke {
+                font-size: 2em;
+                margin: 10px 0;
+            }
+            .hashtags {
+                font-size: 1.5em;
+            }
+            .small-image-right,
+            .small-image-left {
+                width: 200px;
+                bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" onclick="startSound()">
+        <div class="title">دفعة لرجال 2020</div>
+        <div id="countdown" class="countdown"></div>
+        <div class="joke">Feeling Old Huh?</div>
+        <div class="hashtags">
+            # نَحن_نقُود_ولَا_نتَّبع. <br>
+            #لرجال_للرجال
+        </div>
+        <img src="B2L4WBsCQAAjf7Z.jpg" alt="Old Man" class="small-image-right">
+        <img src="your-left-image.jpg" alt="Left Image" class="small-image-left"> <!-- Replace with your left image path -->
+    </div>
+
+    <!-- Sound effect -->
+    <audio id="tickSound" src="tick.mp3" loop></audio> <!-- Replace with your sound file path -->
+
+    <script>
+        // Set the graduation date
+        var graduationDate = new Date("May 28, 2025 14:00:00").getTime();
+
+        // Function to start the sound
+        function startSound() {
+            var tickSound = document.getElementById("tickSound");
+            tickSound.play();  // Start the sound
+        }
+
+        // Update the countdown every 1 second
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = graduationDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the countdown element
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " 
+            + minutes + "m " + seconds + "s ";
+
+            // If the countdown is over, stop the sound and display a message
+            if (distance < 0) {
+                clearInterval(x);
+                var tickSound = document.getElementById("tickSound");
+                tickSound.pause();  // Stop the sound
+                document.getElementById("countdown").innerHTML = "Congratulations!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
